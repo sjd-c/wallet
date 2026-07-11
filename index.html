@@ -218,7 +218,7 @@ function palette(id) {
 function renderHistory(history) {
   const el = document.getElementById('txlist');
   if (!history) {
-    el.innerHTML = '<div class="empty">Nessuna transazione ancora 🌱</div>';
+    el.innerHTML = '<div class="empty">Nessuna transazione ancora</div>';
     return;
   }
   const txs = Object.values(history).sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
