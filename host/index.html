@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
   <title>Host — YousCoin</title>
-  <link rel="manifest" id="manifest-link" href="../manifest.json"/>
+  <link rel="manifest" href="manifest.json"/>
   <meta name="theme-color" content="#1D9E75"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-title" content="YousCoin Host"/>
@@ -227,24 +227,7 @@ firebase.initializeApp({
 });
 const db = firebase.database();
 
-// Manifest dinamico per installazione PWA host
-(function() {
-  const m = {
-    name: "YousCoin Host",
-    short_name: "YC Host",
-    start_url: "/wallet/host/",
-    scope: "/wallet/",
-    display: "standalone",
-    background_color: "#f7fffe",
-    theme_color: "#1D9E75",
-    icons: [
-      { src: "../icons/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any maskable" },
-      { src: "../icons/icon-512.png", sizes: "512x512", type: "image/png", purpose: "any maskable" }
-    ]
-  };
-  const blob = new Blob([JSON.stringify(m)], { type: "application/manifest+json" });
-  document.getElementById("manifest-link").setAttribute("href", URL.createObjectURL(blob));
-})();
+// Manifest statico: host/manifest.json
 
 // ── State ──
 let currentPlayers = {};
