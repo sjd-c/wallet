@@ -7,6 +7,9 @@
   <link rel="manifest" href="../manifest.json"/>
   <meta name="theme-color" content="#1D9E75"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-title" content="YousCoin Host"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <link rel="apple-touch-icon" href="../icons/icon-192.png"/>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.2.0/dist/tabler-icons.min.css"/>
   <style>
@@ -164,12 +167,12 @@
     <div class="form-group">
       <div class="form-lbl">valore</div>
       <div class="stepper">
-        <button class="step-btn minus" onclick="changeStep(-10)">−</button>
+        <button class="step-btn minus" onclick="changeStep(-5)">−</button>
         <div class="step-display" id="step-display">
           <div class="step-num" id="step-num">10</div>
           <div class="step-lbl" id="step-lbl">aggiunta</div>
         </div>
-        <button class="step-btn" onclick="changeStep(+10)">+</button>
+        <button class="step-btn" onclick="changeStep(+5)">+</button>
       </div>
     </div>
 
@@ -272,7 +275,7 @@ function renderPlayers() {
 function openSendAll() {
   tuttiSel = true;
   selIds.clear();
-  stepVal = 100;
+  stepVal = 10;
   document.getElementById('nota-inp').value = '';
   document.getElementById('step-num').textContent = stepVal;
   updateStepUI();
@@ -284,7 +287,7 @@ function openSendAll() {
 function openSend(id) {
   tuttiSel = false;
   selIds = new Set([id]);
-  stepVal = 100;
+  stepVal = 10;
   document.getElementById('nota-inp').value = '';
   document.getElementById('step-num').textContent = stepVal;
   updateStepUI();
