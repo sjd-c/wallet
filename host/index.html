@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
   <title>Host — YousCoin</title>
-  <link rel="manifest" href="../manifest.json"/>
+  <link rel="manifest" id="manifest-link" href="../manifest.json"/>
   <meta name="theme-color" content="#1D9E75"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-title" content="YousCoin Host"/>
@@ -16,18 +16,15 @@
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:'Nunito',sans-serif;background:#f7fffe;min-height:100vh;display:flex;flex-direction:column}
 
-    /* Header */
     .hdr{padding:14px 16px 12px;background:#fff;border-bottom:2px solid #e8f8f3;display:flex;align-items:center;gap:8px;position:sticky;top:0;z-index:10}
     .hdr-title{font-size:15px;font-weight:900;color:#1a1a1a;flex:1}
     .new-btn{padding:6px 13px;font-size:12px;font-weight:800;background:#e6f9f2;color:#1D9E75;border:2px solid #1D9E75;border-radius:10px;text-decoration:none;display:flex;align-items:center;gap:4px}
 
-    /* Summary */
     .summary-row{display:flex;gap:8px;padding:12px 14px 8px}
     .sum-card{flex:1;background:#fff;border-radius:14px;padding:10px 12px;border:2px solid #e8f8f3;text-align:center}
     .sum-num{font-size:24px;font-weight:900;color:#1D9E75}
     .sum-lbl{font-size:10px;color:#aaa;font-weight:700;text-transform:uppercase;margin-top:2px}
 
-    /* Send all bar */
     .send-all{margin:0 14px 10px;padding:12px 14px;background:linear-gradient(90deg,#FDF3DC,#fff9ec);border-radius:14px;display:flex;align-items:center;gap:10px;border:2px solid #f5d87a;cursor:pointer}
     .send-all i{color:#c08a00;font-size:22px}
     .send-all-info{flex:1}
@@ -35,24 +32,22 @@
     .send-all-sub{font-size:11px;color:#b07a00;font-weight:600}
     .send-all-btn{padding:7px 14px;font-size:12px;font-weight:800;background:#EF9F27;color:#fff;border:none;border-radius:10px;cursor:pointer;font-family:'Nunito',sans-serif}
 
-    /* Section label */
     .sec-lbl{font-size:11px;color:#1D9E75;font-weight:900;padding:4px 14px 6px;text-transform:uppercase;letter-spacing:.8px;display:flex;align-items:center;gap:6px}
     .sec-lbl::before{content:'';width:8px;height:8px;border-radius:50%;background:#1D9E75;display:inline-block;flex-shrink:0}
 
-    /* Player list */
     #plist{flex:1;overflow-y:auto;padding-bottom:24px}
     .loading-row{padding:32px;text-align:center;color:#ccc;font-size:13px;font-weight:700}
     .empty-state{padding:40px 24px;text-align:center;color:#ccc;font-size:13px;font-weight:700;line-height:1.8}
 
-    .p-row{display:flex;align-items:center;padding:10px 14px;border-bottom:1.5px dashed #e0f5ef;gap:8px}
+    .p-row{display:flex;align-items:center;padding:10px 14px;border-bottom:1.5px dashed #e0f5ef;gap:7px}
     .p-av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;flex-shrink:0}
     .p-name{flex:1;font-size:13px;color:#222;font-weight:700;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     .p-bal{font-size:13px;font-weight:900;color:#1D9E75;white-space:nowrap}
     .p-bal-lbl{font-size:9px;color:#aaa;font-weight:700;text-transform:uppercase;text-align:right}
     .send-btn{padding:5px 10px;font-size:11px;font-weight:800;border-radius:8px;border:2px solid #1D9E75;background:#e6f9f2;color:#1D9E75;cursor:pointer;font-family:'Nunito',sans-serif;white-space:nowrap}
+    .edit-btn{padding:5px 8px;font-size:16px;border-radius:8px;border:2px solid #d0e8ff;background:#eef5ff;color:#3a74d4;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
     .del-btn{padding:5px 8px;font-size:16px;border-radius:8px;border:2px solid #f5c0c0;background:#fff0f0;color:#e05555;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 
-    /* Overlays */
     .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);align-items:flex-end;justify-content:center;z-index:100}
     .overlay.open{display:flex}
     .modal{background:#fff;border-radius:22px 22px 0 0;width:100%;max-width:480px;padding:20px 16px 32px;max-height:90vh;overflow-y:auto}
@@ -60,12 +55,10 @@
     .modal-title{font-size:16px;font-weight:900;color:#1a1a1a;flex:1}
     .modal-close{border:none;background:none;font-size:22px;color:#bbb;cursor:pointer;padding:0 4px}
 
-    /* Form elements */
     .form-lbl{font-size:11px;color:#1D9E75;font-weight:900;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;display:flex;align-items:center;gap:5px}
     .form-lbl::before{content:'';width:6px;height:6px;border-radius:50%;background:#1D9E75;display:inline-block}
     .form-group{margin-bottom:14px}
 
-    /* Chips */
     .chip-grid{display:flex;flex-wrap:wrap;gap:7px}
     .chip{display:flex;align-items:center;gap:6px;padding:6px 11px 6px 7px;border-radius:20px;border:2px solid #ddd;background:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:#888;transition:all .15s;user-select:none}
     .chip-av{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;background:#eee;color:#aaa;flex-shrink:0}
@@ -76,7 +69,6 @@
     .chip.tutti.sel .chip-av{background:#EF9F27;color:#fff}
     .chip.tutti .chip-av{background:#FDF3DC;color:#EF9F27}
 
-    /* Stepper */
     .stepper{display:flex;align-items:center;gap:12px;padding:4px 0}
     .step-btn{width:48px;height:48px;border-radius:50%;border:3px solid #1D9E75;background:#fff;color:#1D9E75;font-size:28px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'Nunito',sans-serif;line-height:1;transition:all .12s;flex-shrink:0}
     .step-btn:active{transform:scale(.92)}
@@ -88,11 +80,9 @@
     .step-lbl{font-size:10px;font-weight:700;text-transform:uppercase;color:#aaa;margin-top:2px;transition:color .2s}
     .step-lbl.neg{color:#e05555}
 
-    /* Note input */
     .form-inp{width:100%;padding:10px 12px;font-size:13px;border-radius:12px;border:2px solid #ddd;background:#fff;color:#222;font-family:'Nunito',sans-serif;font-weight:700;outline:none}
     .form-inp:focus{border-color:#1D9E75}
 
-    /* Preview */
     .preview{padding:10px 14px;background:#fafafa;border-radius:14px;border:2px dashed #9ee8cc;margin:10px 0 14px}
     .prev-lbl{font-size:11px;color:#1D9E75;font-weight:900;text-transform:uppercase;margin-bottom:6px}
     .prev-row{display:flex;justify-content:space-between;font-size:13px;font-weight:700}
@@ -101,11 +91,10 @@
     .prev-val.neg{color:#e05555}
     .prev-note{font-size:11px;color:#bbb;font-weight:600;margin-top:3px}
 
-    /* Confirm button */
     .confirm-btn{width:100%;padding:14px;font-size:15px;font-weight:900;background:#1D9E75;color:#fff;border:none;border-radius:16px;cursor:pointer;font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 14px rgba(29,158,117,.25)}
     .confirm-btn:disabled{opacity:.6;cursor:not-allowed}
+    .confirm-btn.blue{background:#3a74d4;box-shadow:0 4px 14px rgba(58,116,212,.25)}
 
-    /* Delete modal */
     .del-modal{border-radius:22px 22px 0 0;text-align:center;padding:24px 16px 36px}
     .del-icon{font-size:40px;color:#e05555;margin-bottom:8px}
     .del-modal h2{font-size:16px;font-weight:900;color:#222;margin-bottom:6px}
@@ -114,9 +103,9 @@
     .del-cancel{flex:1;padding:12px;border-radius:12px;border:2px solid #ddd;background:#fff;color:#666;cursor:pointer;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800}
     .del-confirm{flex:1;padding:12px;border-radius:12px;border:none;background:#e05555;color:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-size:13px;font-weight:900}
 
-    /* Toast */
     #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a1a1a;color:#fff;padding:10px 20px;border-radius:30px;font-size:13px;font-weight:700;opacity:0;transition:all .3s;z-index:999;white-space:nowrap}
     #toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+    @keyframes spin{to{transform:rotate(360deg)}}
   </style>
 </head>
 <body>
@@ -150,7 +139,7 @@
 <div class="sec-lbl">tutti i saldi</div>
 <div id="plist"><div class="loading-row">Caricamento...</div></div>
 
-<!-- ── Send Modal ── -->
+<!-- Send Modal -->
 <div class="overlay" id="send-overlay" onclick="if(event.target===this)closeSend()">
   <div class="modal">
     <div class="modal-hdr">
@@ -158,12 +147,10 @@
       <span class="modal-title">Invia YousCoin</span>
       <button class="modal-close" onclick="closeSend()">✕</button>
     </div>
-
     <div class="form-group">
       <div class="form-lbl">destinatari</div>
       <div class="chip-grid" id="chip-grid"></div>
     </div>
-
     <div class="form-group">
       <div class="form-lbl">valore</div>
       <div class="stepper">
@@ -175,28 +162,43 @@
         <button class="step-btn" onclick="changeStep(+5)">+</button>
       </div>
     </div>
-
     <div class="form-group">
       <div class="form-lbl">nota</div>
-      <input class="form-inp" id="nota-inp" type="text" placeholder="es. Premio di gioco 🏆" value="" oninput="updatePreview()"/>
+      <input class="form-inp" id="nota-inp" type="text" placeholder="es. Premio di gioco 🏆" oninput="updatePreview()"/>
     </div>
-
     <div class="preview">
       <div class="prev-lbl">✨ anteprima</div>
       <div class="prev-row">
         <span class="prev-dest" id="prev-dest">—</span>
-        <span class="prev-val" id="prev-val">+100 YC</span>
+        <span class="prev-val" id="prev-val">+10 YC</span>
       </div>
       <div class="prev-note" id="prev-note"></div>
     </div>
-
     <button class="confirm-btn" id="confirm-btn" onclick="confirmSend()">
       <i class="ti ti-check"></i> Conferma invio
     </button>
   </div>
 </div>
 
-<!-- ── Delete Modal ── -->
+<!-- Edit Modal -->
+<div class="overlay" id="edit-overlay" onclick="if(event.target===this)closeEdit()">
+  <div class="modal">
+    <div class="modal-hdr">
+      <span style="font-size:20px">✏️</span>
+      <span class="modal-title">Modifica nome</span>
+      <button class="modal-close" onclick="closeEdit()">✕</button>
+    </div>
+    <div class="form-group">
+      <div class="form-lbl">nome completo</div>
+      <input class="form-inp" id="edit-name-inp" type="text" placeholder="Nome completo"/>
+    </div>
+    <button class="confirm-btn blue" onclick="confirmEdit()">
+      <i class="ti ti-check"></i> Salva
+    </button>
+  </div>
+</div>
+
+<!-- Delete Modal -->
 <div class="overlay" id="del-overlay" onclick="if(event.target===this)closeDel()">
   <div class="modal del-modal">
     <div class="del-icon"><i class="ti ti-trash"></i></div>
@@ -225,14 +227,34 @@ firebase.initializeApp({
 });
 const db = firebase.database();
 
+// Manifest dinamico per installazione PWA host
+(function() {
+  const m = {
+    name: "YousCoin Host",
+    short_name: "YC Host",
+    start_url: "/wallet/host/",
+    scope: "/wallet/",
+    display: "standalone",
+    background_color: "#f7fffe",
+    theme_color: "#1D9E75",
+    icons: [
+      { src: "../icons/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any maskable" },
+      { src: "../icons/icon-512.png", sizes: "512x512", type: "image/png", purpose: "any maskable" }
+    ]
+  };
+  const blob = new Blob([JSON.stringify(m)], { type: "application/manifest+json" });
+  document.getElementById("manifest-link").setAttribute("href", URL.createObjectURL(blob));
+})();
+
 // ── State ──
 let currentPlayers = {};
 let selIds = new Set();
 let tuttiSel = false;
 let stepVal = 10;
 let deleteId = null;
+let editId = null;
 
-// ── Firebase listener ──
+// ── Firebase ──
 db.ref('players').on('value', snap => {
   currentPlayers = {};
   let count = 0, total = 0;
@@ -248,7 +270,6 @@ db.ref('players').on('value', snap => {
   renderPlayers();
 });
 
-// ── Render player list ──
 function renderPlayers() {
   const el = document.getElementById('plist');
   const ids = Object.keys(currentPlayers);
@@ -264,80 +285,57 @@ function renderPlayers() {
     return '<div class="p-row">'
       + '<div class="p-av" style="background:' + bg + ';color:' + col + '">' + inits + '</div>'
       + '<span class="p-name">' + esc(p.name) + '</span>'
-      + '<div style="text-align:right;margin-right:2px"><div class="p-bal">' + (p.balance || 0) + '</div><div class="p-bal-lbl">YC</div></div>'
+      + '<div style="text-align:right;margin-right:2px"><div class="p-bal">' + (p.balance||0) + '</div><div class="p-bal-lbl">YC</div></div>'
       + '<button class="send-btn" onclick="openSend(\'' + id + '\')">+ invia</button>'
+      + '<button class="edit-btn" onclick="openEdit(\'' + id + '\',\'' + esc(p.name) + '\')"><i class="ti ti-pencil"></i></button>'
       + '<button class="del-btn" onclick="openDelete(\'' + id + '\',\'' + esc(p.name) + '\')"><i class="ti ti-trash"></i></button>'
       + '</div>';
   }).join('');
 }
 
-// ── Send modal ──
+// ── Send ──
 function openSendAll() {
-  tuttiSel = true;
-  selIds.clear();
-  stepVal = 10;
+  tuttiSel = true; selIds.clear(); stepVal = 10;
   document.getElementById('nota-inp').value = '';
   document.getElementById('step-num').textContent = stepVal;
-  updateStepUI();
-  renderChips();
-  updatePreview();
+  updateStepUI(); renderChips(); updatePreview();
   document.getElementById('send-overlay').classList.add('open');
 }
-
 function openSend(id) {
-  tuttiSel = false;
-  selIds = new Set([id]);
-  stepVal = 10;
+  tuttiSel = false; selIds = new Set([id]); stepVal = 10;
   document.getElementById('nota-inp').value = '';
   document.getElementById('step-num').textContent = stepVal;
-  updateStepUI();
-  renderChips();
-  updatePreview();
+  updateStepUI(); renderChips(); updatePreview();
   document.getElementById('send-overlay').classList.add('open');
 }
-
-function closeSend() {
-  document.getElementById('send-overlay').classList.remove('open');
-}
+function closeSend() { document.getElementById('send-overlay').classList.remove('open'); }
 
 function renderChips() {
   const grid = document.getElementById('chip-grid');
   grid.innerHTML = '';
-
   const tuttiChip = document.createElement('div');
   tuttiChip.className = 'chip tutti' + (tuttiSel ? ' sel' : '');
   tuttiChip.innerHTML = '<div class="chip-av"><i class="ti ti-users" style="font-size:10px"></i></div>Tutti';
   tuttiChip.addEventListener('click', () => { tuttiSel = !tuttiSel; if (tuttiSel) selIds.clear(); renderChips(); updatePreview(); });
   grid.appendChild(tuttiChip);
-
-  Object.keys(currentPlayers)
-    .sort((a, b) => currentPlayers[a].name.localeCompare(currentPlayers[b].name))
-    .forEach(id => {
-      const p = currentPlayers[id];
-      const inits = p.name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
-      const [bg, col] = palette(id);
-      const isSel = selIds.has(id);
-      const chip = document.createElement('div');
-      chip.className = 'chip' + (isSel ? ' sel' : '');
-      const avStyle = isSel ? '' : 'background:' + bg + ';color:' + col;
-      chip.innerHTML = '<div class="chip-av" style="' + avStyle + '">' + inits + '</div>' + p.name.split(' ')[0];
-      chip.addEventListener('click', () => {
-        tuttiSel = false;
-        if (selIds.has(id)) selIds.delete(id); else selIds.add(id);
-        renderChips();
-        updatePreview();
-      });
-      grid.appendChild(chip);
-    });
+  Object.keys(currentPlayers).sort((a,b) => currentPlayers[a].name.localeCompare(currentPlayers[b].name)).forEach(id => {
+    const p = currentPlayers[id];
+    const inits = p.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+    const [bg, col] = palette(id);
+    const isSel = selIds.has(id);
+    const chip = document.createElement('div');
+    chip.className = 'chip' + (isSel ? ' sel' : '');
+    chip.innerHTML = '<div class="chip-av" style="' + (isSel ? '' : 'background:'+bg+';color:'+col) + '">' + inits + '</div>' + p.name.split(' ')[0];
+    chip.addEventListener('click', () => { tuttiSel = false; if (selIds.has(id)) selIds.delete(id); else selIds.add(id); renderChips(); updatePreview(); });
+    grid.appendChild(chip);
+  });
 }
 
 function changeStep(delta) {
   stepVal += delta;
   document.getElementById('step-num').textContent = stepVal;
-  updateStepUI();
-  updatePreview();
+  updateStepUI(); updatePreview();
 }
-
 function updateStepUI() {
   const neg = stepVal < 0;
   document.getElementById('step-num').className = 'step-num' + (neg ? ' neg' : '');
@@ -345,15 +343,8 @@ function updateStepUI() {
   document.getElementById('step-lbl').textContent = neg ? 'prelievo' : 'aggiunta';
   document.getElementById('step-display').className = 'step-display' + (neg ? ' neg' : '');
 }
-
 function updatePreview() {
-  let dest;
-  if (tuttiSel) {
-    dest = 'Tutti i giocatori';
-  } else {
-    const names = [...selIds].map(id => currentPlayers[id] ? currentPlayers[id].name.split(' ')[0] : id);
-    dest = names.length ? names.join(', ') : '—';
-  }
+  const dest = tuttiSel ? 'Tutti i giocatori' : ([...selIds].map(id => currentPlayers[id] ? currentPlayers[id].name.split(' ')[0] : id).join(', ') || '—');
   document.getElementById('prev-dest').textContent = dest;
   const valEl = document.getElementById('prev-val');
   valEl.textContent = (stepVal >= 0 ? '+' : '') + stepVal + ' YC';
@@ -366,11 +357,9 @@ async function confirmSend() {
   if (stepVal === 0) { showToast('Inserisci un valore diverso da 0'); return; }
   const targets = tuttiSel ? Object.keys(currentPlayers) : [...selIds];
   if (!targets.length) { showToast('Seleziona almeno un destinatario'); return; }
-
   const btn = document.getElementById('confirm-btn');
   btn.disabled = true;
   btn.innerHTML = '<i class="ti ti-loader-2" style="animation:spin .8s linear infinite"></i> Invio...';
-
   const nota = document.getElementById('nota-inp').value.trim() || '—';
   const updates = {};
   targets.forEach(id => {
@@ -379,7 +368,6 @@ async function confirmSend() {
     updates['players/' + id + '/history/' + txKey] = { amount: stepVal, note: nota, timestamp: firebase.database.ServerValue.TIMESTAMP };
     updates['players/' + id + '/lastTx'] = { amount: stepVal, note: nota, timestamp: firebase.database.ServerValue.TIMESTAMP };
   });
-
   try {
     await db.ref().update(updates);
     closeSend();
@@ -392,47 +380,51 @@ async function confirmSend() {
   }
 }
 
-// ── Delete modal ──
+// ── Edit ──
+function openEdit(id, currentName) {
+  editId = id;
+  document.getElementById('edit-name-inp').value = currentName;
+  document.getElementById('edit-overlay').classList.add('open');
+  setTimeout(() => document.getElementById('edit-name-inp').focus(), 100);
+}
+function closeEdit() { document.getElementById('edit-overlay').classList.remove('open'); editId = null; }
+async function confirmEdit() {
+  const newName = document.getElementById('edit-name-inp').value.trim();
+  if (!newName) { showToast('Inserisci un nome'); return; }
+  try {
+    await db.ref('players/' + editId + '/name').set(newName);
+    closeEdit();
+    showToast('Nome aggiornato ✅');
+  } catch (e) { showToast('Errore: ' + e.message); }
+}
+
+// ── Delete ──
 function openDelete(id, name) {
   deleteId = id;
   document.getElementById('del-name').textContent = name;
   document.getElementById('del-overlay').classList.add('open');
 }
-function closeDel() {
-  document.getElementById('del-overlay').classList.remove('open');
-  deleteId = null;
-}
+function closeDel() { document.getElementById('del-overlay').classList.remove('open'); deleteId = null; }
 async function confirmDelete() {
   if (!deleteId) return;
   try {
     await db.ref('players/' + deleteId).remove();
-    closeDel();
-    showToast('Giocatore eliminato');
-  } catch (e) {
-    showToast('Errore: ' + e.message);
-  }
+    closeDel(); showToast('Giocatore eliminato');
+  } catch (e) { showToast('Errore: ' + e.message); }
 }
 
 // ── Helpers ──
 function palette(id) {
-  const p = [
-    ['#d0f2e7','#0F6E56'],['#FDF3DC','#9a6200'],['#ddeeff','#1a5cbf'],
-    ['#ede8fb','#5b28b8'],['#ffe8e8','#b81a1a'],['#ffe0f5','#b0186e']
-  ];
-  let h = 0;
-  for (const c of id) h = (h * 31 + c.charCodeAt(0)) % p.length;
-  return p[h];
+  const p = [['#d0f2e7','#0F6E56'],['#FDF3DC','#9a6200'],['#ddeeff','#1a5cbf'],
+             ['#ede8fb','#5b28b8'],['#ffe8e8','#b81a1a'],['#ffe0f5','#b0186e']];
+  let h = 0; for (const c of id) h = (h * 31 + c.charCodeAt(0)) % p.length; return p[h];
 }
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/'/g,'&#39;');
-}
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/'/g,'&#39;'); }
 let toastT;
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(toastT);
-  toastT = setTimeout(() => t.classList.remove('show'), 3000);
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 3000);
 }
 
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('../sw.js').catch(() => {});
