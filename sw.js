@@ -1,4 +1,4 @@
-const CACHE = 'youscoin-v12';
+const CACHE = 'youscoin-v13';
 const SHELL = ['./index.html', './host/index.html', './host/setup.html', './manifest.json'];
 
 self.addEventListener('install', e => {
