@@ -75,7 +75,8 @@
     .step-btn.minus{border-color:#e05555;color:#e05555}
     .step-display{flex:1;background:#fafafa;border:2px solid #e0f5ef;border-radius:16px;padding:10px 8px;text-align:center;transition:border-color .2s}
     .step-display.neg{border-color:#fcc}
-    .step-num{font-size:40px;font-weight:900;color:#1D9E75;line-height:1;transition:color .2s}
+    .step-num{font-size:40px;font-weight:900;color:#1D9E75;line-height:1;transition:color .2s;border:none;background:transparent;text-align:center;width:100%;font-family:'Nunito',sans-serif;outline:none;-moz-appearance:textfield}
+    .step-num::-webkit-outer-spin-button,.step-num::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
     .step-num.neg{color:#e05555}
     .step-lbl{font-size:10px;font-weight:700;text-transform:uppercase;color:#aaa;margin-top:2px;transition:color .2s}
     .step-lbl.neg{color:#e05555}
@@ -156,7 +157,7 @@
       <div class="stepper">
         <button class="step-btn minus" onclick="changeStep(-5)">−</button>
         <div class="step-display" id="step-display">
-          <div class="step-num" id="step-num">10</div>
+          <input class="step-num" id="step-num" type="number" step="5" value="10" onfocus="this.select()" oninput="onStepInput(this.value)"/>
           <div class="step-lbl" id="step-lbl">aggiunta</div>
         </div>
         <button class="step-btn" onclick="changeStep(+5)">+</button>
@@ -280,14 +281,14 @@ function renderPlayers() {
 function openSendAll() {
   tuttiSel = true; selIds.clear(); stepVal = 10;
   document.getElementById('nota-inp').value = '';
-  document.getElementById('step-num').textContent = stepVal;
+  document.getElementById('step-num').value = stepVal;
   updateStepUI(); renderChips(); updatePreview();
   document.getElementById('send-overlay').classList.add('open');
 }
 function openSend(id) {
   tuttiSel = false; selIds = new Set([id]); stepVal = 10;
   document.getElementById('nota-inp').value = '';
-  document.getElementById('step-num').textContent = stepVal;
+  document.getElementById('step-num').value = stepVal;
   updateStepUI(); renderChips(); updatePreview();
   document.getElementById('send-overlay').classList.add('open');
 }
@@ -316,7 +317,12 @@ function renderChips() {
 
 function changeStep(delta) {
   stepVal += delta;
-  document.getElementById('step-num').textContent = stepVal;
+  document.getElementById('step-num').value = stepVal;
+  updateStepUI(); updatePreview();
+}
+function onStepInput(raw) {
+  const n = parseInt(raw, 10);
+  stepVal = isNaN(n) ? 0 : n;
   updateStepUI(); updatePreview();
 }
 function updateStepUI() {
