@@ -19,7 +19,12 @@
     .hdr{padding:14px 16px 12px;background:#fff;border-bottom:2px solid #e8f8f3;display:flex;align-items:center;gap:8px;position:sticky;top:0;z-index:10}
     .hdr-title{font-size:15px;font-weight:900;color:#1a1a1a;flex:1}
     .new-btn{padding:6px 13px;font-size:12px;font-weight:800;background:transparent;color:#000;border:2px solid #000;border-radius:10px;text-decoration:none;display:flex;align-items:center;gap:4px}
-    .reset-btn{padding:6px 9px;font-size:15px;background:transparent;color:#e05555;border:2px solid #e05555;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-left:auto}
+    .menu-wrap{position:relative;margin-left:auto}
+    .menu-btn{padding:6px 9px;font-size:17px;background:transparent;color:#aaa;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center}
+    .menu-dd{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#fff;border:2px solid #eee;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.1);min-width:160px;z-index:20;overflow:hidden}
+    .menu-dd.open{display:block}
+    .menu-dd button{width:100%;text-align:left;padding:11px 14px;font-size:13px;font-weight:700;color:#e05555;background:#fff;border:none;cursor:pointer;font-family:'Nunito',sans-serif;display:flex;align-items:center;gap:8px}
+    .menu-dd button:active{background:#fdf2f2}
 
     .summary-row{display:flex;gap:8px;padding:12px 14px 8px}
     .sum-card{flex:1;background:#fff;border-radius:14px;padding:10px 12px;border:2px solid #e8f8f3;text-align:center}
@@ -115,8 +120,13 @@
 <div class="hdr">
   <span style="font-size:20px">📊</span>
   <span class="hdr-title">Pannello Host</span>
-  <button class="reset-btn" onclick="openReset()"><i class="ti ti-refresh"></i></button>
   <a href="setup.html" class="new-btn"><i class="ti ti-user-plus"></i> Nuovo giocatore</a>
+  <div class="menu-wrap">
+    <button class="menu-btn" onclick="toggleMenu(event)"><i class="ti ti-dots-vertical"></i></button>
+    <div class="menu-dd" id="menu-dd">
+      <button onclick="closeMenu();openReset()"><i class="ti ti-refresh"></i> Reset anno</button>
+    </div>
+  </div>
 </div>
 
 <div class="summary-row">
@@ -416,6 +426,14 @@ async function confirmDelete() {
     closeDel(); showToast('Giocatore eliminato');
   } catch (e) { showToast('Errore: ' + e.message); }
 }
+
+// ── Menu ──
+function toggleMenu(e) {
+  e.stopPropagation();
+  document.getElementById('menu-dd').classList.toggle('open');
+}
+function closeMenu() { document.getElementById('menu-dd').classList.remove('open'); }
+document.addEventListener('click', closeMenu);
 
 // ── Reset anno ──
 function openReset() { document.getElementById('reset-overlay').classList.add('open'); }
