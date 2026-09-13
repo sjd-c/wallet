@@ -19,6 +19,7 @@
     .hdr{padding:14px 16px 12px;background:#fff;border-bottom:2px solid #e8f8f3;display:flex;align-items:center;gap:8px;position:sticky;top:0;z-index:10}
     .hdr-title{font-size:15px;font-weight:900;color:#1a1a1a;flex:1}
     .new-btn{padding:6px 13px;font-size:12px;font-weight:800;background:transparent;color:#000;border:2px solid #000;border-radius:10px;text-decoration:none;display:flex;align-items:center;gap:4px}
+    .reset-btn{padding:6px 9px;font-size:15px;background:transparent;color:#e05555;border:2px solid #e05555;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-left:auto}
 
     .summary-row{display:flex;gap:8px;padding:12px 14px 8px}
     .sum-card{flex:1;background:#fff;border-radius:14px;padding:10px 12px;border:2px solid #e8f8f3;text-align:center}
@@ -114,6 +115,7 @@
 <div class="hdr">
   <span style="font-size:20px">📊</span>
   <span class="hdr-title">Pannello Host</span>
+  <button class="reset-btn" onclick="openReset()"><i class="ti ti-refresh"></i></button>
   <a href="setup.html" class="new-btn"><i class="ti ti-user-plus"></i> Nuovo giocatore</a>
 </div>
 
@@ -208,6 +210,19 @@
     <div class="del-btns">
       <button class="del-cancel" onclick="closeDel()">Annulla</button>
       <button class="del-confirm" onclick="confirmDelete()">Elimina</button>
+    </div>
+  </div>
+</div>
+
+<!-- Reset Anno Modal -->
+<div class="overlay" id="reset-overlay" onclick="if(event.target===this)closeReset()">
+  <div class="modal del-modal">
+    <div class="del-icon"><i class="ti ti-refresh"></i></div>
+    <h2>Reset anno</h2>
+    <p>Azzera saldo e cronologia di <strong>tutti i giocatori</strong>.<br>I profili verranno mantenuti. Azione irreversibile.</p>
+    <div class="del-btns">
+      <button class="del-cancel" onclick="closeReset()">Annulla</button>
+      <button class="del-confirm" onclick="confirmReset()">Reset</button>
     </div>
   </div>
 </div>
@@ -399,6 +414,22 @@ async function confirmDelete() {
   try {
     await db.ref('players/' + deleteId).remove();
     closeDel(); showToast('Giocatore eliminato');
+  } catch (e) { showToast('Errore: ' + e.message); }
+}
+
+// ── Reset anno ──
+function openReset() { document.getElementById('reset-overlay').classList.add('open'); }
+function closeReset() { document.getElementById('reset-overlay').classList.remove('open'); }
+async function confirmReset() {
+  try {
+    const updates = {};
+    Object.keys(currentPlayers).forEach(id => {
+      updates['players/' + id + '/balance'] = 0;
+      updates['players/' + id + '/history'] = null;
+      updates['players/' + id + '/lastTx'] = null;
+    });
+    await db.ref().update(updates);
+    closeReset(); showToast('Anno resettato ✅');
   } catch (e) { showToast('Errore: ' + e.message); }
 }
 
