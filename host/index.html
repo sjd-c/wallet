@@ -114,9 +114,13 @@
     #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a1a1a;color:#fff;padding:10px 20px;border-radius:30px;font-size:13px;font-weight:700;opacity:0;transition:all .3s;z-index:999;white-space:nowrap}
     #toast.show{transform:translateX(-50%) translateY(0);opacity:1}
     @keyframes spin{to{transform:rotate(360deg)}}
+
+    #update-banner{display:none;position:fixed;top:0;left:0;right:0;background:#1D9E75;color:#fff;padding:10px 16px;font-size:12px;font-weight:800;text-align:center;z-index:1000;cursor:pointer}
   </style>
 </head>
 <body>
+
+<div id="update-banner" onclick="applyUpdate()">🔄 Nuova versione disponibile — tocca per aggiornare</div>
 
 <div class="hdr">
   <span style="font-size:20px">📊</span>
@@ -465,7 +469,30 @@ function showToast(msg) {
   clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('../sw.js').catch(() => {});
+let swReg = null;
+function showUpdateBanner() { document.getElementById('update-banner').style.display = 'block'; }
+function applyUpdate() {
+  if (swReg && swReg.waiting) swReg.waiting.postMessage('SKIP_WAITING');
+}
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('../sw.js').then(reg => {
+    swReg = reg;
+    if (reg.waiting && reg.active) showUpdateBanner();
+    reg.addEventListener('updatefound', () => {
+      const nw = reg.installing;
+      if (!nw) return;
+      nw.addEventListener('statechange', () => {
+        if (nw.state === 'installed' && navigator.serviceWorker.controller) showUpdateBanner();
+      });
+    });
+  }).catch(() => {});
+  let reloading = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (reloading) return;
+    reloading = true;
+    location.reload();
+  });
+}
 </script>
 </body>
 </html>

@@ -79,9 +79,14 @@
 
     /* Confetti */
     @keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(110vh) rotate(720deg)}}
+
+    /* Update banner */
+    #update-banner{display:none;position:fixed;top:0;left:0;right:0;background:#1D9E75;color:#fff;padding:10px 16px;font-size:12px;font-weight:800;text-align:center;z-index:1000;cursor:pointer}
   </style>
 </head>
 <body>
+
+<div id="update-banner" onclick="applyUpdate()">🔄 Nuova versione disponibile — tocca per aggiornare</div>
 
 <div id="loading">
   <img class="splash-logo" src="icons/youscoin.png" alt="YousCoin"/>
@@ -285,7 +290,30 @@ function dismissHint() {
 }
 
 // Service worker
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(() => {});
+let swReg = null;
+function showUpdateBanner() { document.getElementById('update-banner').style.display = 'block'; }
+function applyUpdate() {
+  if (swReg && swReg.waiting) swReg.waiting.postMessage('SKIP_WAITING');
+}
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').then(reg => {
+    swReg = reg;
+    if (reg.waiting && reg.active) showUpdateBanner();
+    reg.addEventListener('updatefound', () => {
+      const nw = reg.installing;
+      if (!nw) return;
+      nw.addEventListener('statechange', () => {
+        if (nw.state === 'installed' && navigator.serviceWorker.controller) showUpdateBanner();
+      });
+    });
+  }).catch(() => {});
+  let reloading = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (reloading) return;
+    reloading = true;
+    location.reload();
+  });
+}
 </script>
 </body>
 </html>
