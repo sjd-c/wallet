@@ -82,6 +82,40 @@
 
     /* Update banner */
     #update-banner{display:none;position:fixed;top:0;left:0;right:0;background:#1D9E75;color:#fff;padding:10px 16px;font-size:12px;font-weight:800;text-align:center;z-index:1000;cursor:pointer}
+
+    /* ── Onboarding ── */
+    #onboarding{display:none;flex-direction:column;flex:1;position:relative;overflow:hidden}
+    .ob-skip{position:absolute;top:18px;right:18px;z-index:5;background:none;border:none;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;color:#8a9b96;cursor:pointer;padding:8px}
+    .ob-track{flex:1;display:flex;width:300%;transition:transform .45s cubic-bezier(.65,0,.35,1)}
+    .ob-slide{width:33.3333%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 32px 16px;text-align:center;gap:22px}
+    .ob-coin{width:132px;height:132px;border-radius:50%;overflow:hidden;animation:obFloat 3.2s ease-in-out infinite}
+    .ob-coin img{width:100%;height:100%;object-fit:cover;display:block}
+    @keyframes obFloat{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(2deg)}}
+    .ob-slide h1{font-size:26px;font-weight:900;letter-spacing:-.5px;margin:0;text-wrap:balance;color:#1a1a1a}
+    .ob-lead{font-size:15px;font-weight:700;color:#8a9b96;line-height:1.55;max-width:280px;margin:0}
+    .ob-tag{font-size:13px;font-weight:800;color:#157a5b;background:#e6f9f2;border:2px solid #bdeada;padding:6px 16px;border-radius:20px}
+    .ob-rule-list{display:flex;flex-direction:column;gap:14px;width:100%;max-width:300px;text-align:left}
+    .ob-rule{display:flex;align-items:flex-start;gap:12px;background:#fff;border:2px solid #e8f4f0;border-radius:16px;padding:14px 16px}
+    .ob-rule-ic{flex-shrink:0;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px}
+    .ob-rule-ic.a{background:#e6f9f2;color:#1D9E75}
+    .ob-rule-ic.b{background:#fdf3dc;color:#EF9F27}
+    .ob-rule-ic.c{background:#fdecec;color:#e05555}
+    .ob-rule-tx{font-size:13px;font-weight:700;color:#556}
+    .ob-rule-tx b{color:#1a1a1a;font-weight:900}
+    .ob-bal-card{width:100%;max-width:280px;background:linear-gradient(160deg,#1D9E75,#157a5b);border-radius:26px;padding:30px 24px;color:#fff;box-shadow:0 18px 40px rgba(29,158,117,.32)}
+    .ob-bal-lbl{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;opacity:.75}
+    .ob-bal-num{font-size:52px;font-weight:900;letter-spacing:-1.5px;margin:6px 0 2px;font-variant-numeric:tabular-nums}
+    .ob-bal-sub{font-size:12.5px;font-weight:700;opacity:.85}
+    .ob-dots{display:flex;gap:7px;justify-content:center;padding:4px 0 6px}
+    .ob-dot{width:7px;height:7px;border-radius:50%;background:#d7ece5;transition:all .3s}
+    .ob-dot.on{width:20px;background:#1D9E75}
+    .ob-foot{padding:6px 24px calc(26px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:10px}
+    .ob-cta{border:none;border-radius:16px;padding:16px;background:#1D9E75;color:#fff;font-family:'Nunito',sans-serif;font-size:15px;font-weight:900;cursor:pointer;transition:transform .12s,background .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+    .ob-cta:active{transform:scale(.97)}
+    .ob-cta.gold{background:#EF9F27}
+    .ob-back{border:none;background:none;color:#8a9b96;font-family:'Nunito',sans-serif;font-size:12.5px;font-weight:800;padding:4px;cursor:pointer;visibility:hidden}
+    .ob-back.show{visibility:visible}
+    @media (prefers-reduced-motion: reduce){.ob-coin{animation:none}.ob-track{transition:none}}
   </style>
 </head>
 <body>
@@ -98,6 +132,51 @@
   <div class="err-icon">🔗</div>
   <h2>Link non valido</h2>
   <p>Controlla il link che ti è stato condiviso<br>o contatta il tuo host.</p>
+</div>
+
+<div id="onboarding">
+  <button class="ob-skip" id="obSkip" onclick="finishOnboarding()">Salta</button>
+  <div class="ob-track" id="obTrack">
+    <div class="ob-slide">
+      <div class="ob-coin"><img src="icons/youscoin-coin.png" alt="YousCoin"/></div>
+      <h1>Benvenuto in YousCoin!</h1>
+      <p class="ob-lead">La moneta ufficiale del gruppo. La usiamo per premiare le sfide, i giochi, i piani biblici e tante altre cose.</p>
+      <div class="ob-tag" id="obName">Ciao! 👋</div>
+    </div>
+    <div class="ob-slide">
+      <h1 style="font-size:23px">Come funziona</h1>
+      <div class="ob-rule-list">
+        <div class="ob-rule">
+          <div class="ob-rule-ic a">🎯</div>
+          <div class="ob-rule-tx"><b>Guadagni</b> YousCoin vincendo giochi o completando sfide.</div>
+        </div>
+        <div class="ob-rule">
+          <div class="ob-rule-ic b">📊</div>
+          <div class="ob-rule-tx">Il tuo saldo si aggiorna <b>in tempo reale</b> ogni volta che ricevi una moneta.</div>
+        </div>
+        <div class="ob-rule">
+          <div class="ob-rule-ic c">🏆</div>
+          <div class="ob-rule-tx">Accumula più YousCoin per <b>salire in classifica</b>.</div>
+        </div>
+      </div>
+    </div>
+    <div class="ob-slide">
+      <h1 style="font-size:23px">Il tuo saldo di partenza</h1>
+      <div class="ob-bal-card">
+        <div class="ob-bal-lbl">Saldo attuale</div>
+        <div class="ob-bal-num" id="obBal">0</div>
+        <div class="ob-bal-sub">YousCoin</div>
+      </div>
+      <p class="ob-lead">Da qui in poi, ogni moneta che ricevi apparirà qui — pronto per iniziare?</p>
+    </div>
+  </div>
+  <div class="ob-dots" id="obDots">
+    <div class="ob-dot on"></div><div class="ob-dot"></div><div class="ob-dot"></div>
+  </div>
+  <div class="ob-foot">
+    <button class="ob-back" id="obBack" onclick="obGoto(obStep-1)">Indietro</button>
+    <button class="ob-cta" id="obCta" onclick="obNext()">Continua</button>
+  </div>
 </div>
 
 <div id="main">
@@ -170,11 +249,11 @@ if (!pid) {
   show('error');
 } else {
   let prev = null;
+  let onboardingShown = false;
 
   db.ref('players/' + pid).on('value', s => {
     const d = s.val();
     if (!d) { show('error'); return; }
-    show('main');
 
     // Avatar
     const inits = d.name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
@@ -204,13 +283,51 @@ if (!pid) {
 
     // History
     renderHistory(d.history);
+
+    if (!onboardingShown) {
+      onboardingShown = true;
+      if (localStorage.getItem('yc_onboarded_' + pid)) {
+        show('main');
+      } else {
+        document.getElementById('obName').textContent = 'Ciao, ' + d.name.split(' ')[0] + '! 👋';
+        document.getElementById('obBal').textContent = nb;
+        show('onboarding');
+      }
+    }
   }, () => show('error'));
 }
 
 function show(s) {
-  document.getElementById('loading').style.display = s === 'loading' ? 'flex' : 'none';
-  document.getElementById('error').style.display   = s === 'error'   ? 'flex' : 'none';
-  document.getElementById('main').style.display    = s === 'main'    ? 'flex' : 'none';
+  document.getElementById('loading').style.display     = s === 'loading'     ? 'flex' : 'none';
+  document.getElementById('error').style.display       = s === 'error'       ? 'flex' : 'none';
+  document.getElementById('onboarding').style.display  = s === 'onboarding'  ? 'flex' : 'none';
+  document.getElementById('main').style.display         = s === 'main'        ? 'flex' : 'none';
+}
+
+// ── Onboarding ──
+let obStep = 0;
+function obRender() {
+  document.getElementById('obTrack').style.transform = 'translateX(-' + (obStep * 33.3333) + '%)';
+  document.querySelectorAll('.ob-dot').forEach((d, i) => d.classList.toggle('on', i === obStep));
+  document.getElementById('obBack').classList.toggle('show', obStep > 0);
+  document.getElementById('obSkip').style.visibility = obStep === 2 ? 'hidden' : 'visible';
+  const cta = document.getElementById('obCta');
+  if (obStep === 2) {
+    cta.textContent = 'Apri il portafoglio 🚀';
+    cta.classList.add('gold');
+  } else {
+    cta.textContent = 'Continua';
+    cta.classList.remove('gold');
+  }
+}
+function obGoto(n) { obStep = Math.max(0, Math.min(2, n)); obRender(); }
+function obNext() {
+  if (obStep < 2) obGoto(obStep + 1);
+  else finishOnboarding();
+}
+function finishOnboarding() {
+  localStorage.setItem('yc_onboarded_' + pid, '1');
+  show('main');
 }
 
 function palette(id) {
