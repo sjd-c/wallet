@@ -35,5 +35,5 @@ export default function UpdateBanner() {
   }
 
   if (!visible) return null;
-  return <div id="update-banner" onClick={applyUpdate}>Nuova versione disponibile — tocca per aggiornare</div>;
+  return <div id="update-banner" onClick={applyUpdate}><i className="ti ti-refresh"></i> Nuova versione disponibile — tocca per aggiornare</div>;
 }
