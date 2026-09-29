@@ -1,10 +1,11 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import { ref, onValue } from 'firebase/database';
+import { ref, onValue, set } from 'firebase/database';
 import { db } from '@/lib/firebase';
 import { BASE, fmtDate, doConfetti } from '@/lib/utils';
 import UpdateBanner from '@/components/UpdateBanner';
 import Avatar from '@/components/Avatar';
+import AvatarPicker from '@/components/AvatarPicker';
 import './wallet.css';
 
 const OB_LAST = 2;
@@ -17,6 +18,8 @@ export default function Wallet() {
   const [notif, setNotif] = useState('');
   const [obStep, setObStep] = useState(0);
   const [iosHint, setIosHint] = useState(false);
+  const [avEdit, setAvEdit] = useState(null);     // { value } while the avatar sheet is open
+  const [avSaving, setAvSaving] = useState(false);
   const notifTimer = useRef();
 
   useEffect(() => {
@@ -85,6 +88,19 @@ export default function Wallet() {
   }
   const obGoto = n => setObStep(Math.max(0, Math.min(OB_LAST, n)));
   const obNext = () => (obStep < OB_LAST ? obGoto(obStep + 1) : finishOnboarding());
+
+  async function saveAvatar() {
+    if (!avEdit.value) return;
+    setAvSaving(true);
+    try {
+      await set(ref(db, 'players/' + pid + '/avatar'), avEdit.value);
+      setAvEdit(null);
+    } catch (e) {
+      alert('Errore: ' + e.message);
+    } finally {
+      setAvSaving(false);
+    }
+  }
 
   const balance = player ? player.balance || 0 : 0;
 
@@ -160,7 +176,10 @@ export default function Wallet() {
       {view === 'main' && (
         <div id="main">
           <div className="hdr">
-            <Avatar id={pid} name={player.name} avatar={player.avatar} size={36} />
+            <button className="hdr-av-btn" onClick={() => setAvEdit({ value: null })} aria-label="Cambia avatar">
+              <Avatar id={pid} name={player.name} avatar={player.avatar} size={36} />
+              <span className="hdr-av-edit"><i className="ti ti-pencil"></i></span>
+            </button>
             <span className="hdr-name">{player.name}</span>
             <span className="hdr-tag">portafoglio</span>
           </div>
@@ -180,6 +199,21 @@ export default function Wallet() {
 
           <div className="sec-lbl">cronologia</div>
           <History history={player.history} />
+        </div>
+      )}
+
+      {avEdit && (
+        <div className="av-sheet-bg" onClick={e => { if (e.target === e.currentTarget) setAvEdit(null); }}>
+          <div className="av-sheet">
+            <div className="av-sheet-hdr">
+              <span className="av-sheet-title">Scegli il tuo avatar</span>
+              <button className="ios-close" onClick={() => setAvEdit(null)} aria-label="Chiudi"><i className="ti ti-x"></i></button>
+            </div>
+            <AvatarPicker value={avEdit.value} onChange={v => setAvEdit({ value: v })} />
+            <button className="av-save" disabled={!avEdit.value || avSaving} onClick={saveAvatar}>
+              <i className="ti ti-check"></i> {avSaving ? 'Salvataggio...' : 'Salva avatar'}
+            </button>
+          </div>
         </div>
       )}
 
