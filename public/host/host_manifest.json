@@ -1,7 +1,7 @@
 {
-  "name": "YousCoin Host",
-  "short_name": "YC Host",
-  "description": "Pannello host YousCoin",
+  "name": "YousCoin Banca",
+  "short_name": "YC Banca",
+  "description": "Pannello Banca YousCoin",
   "start_url": "/wallet/host/",
   "scope": "/wallet/",
   "display": "standalone",

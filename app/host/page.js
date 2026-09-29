@@ -166,7 +166,7 @@ export default function Host() {
 
       <div className="hdr">
         <i className="ti ti-layout-dashboard" style={{ fontSize: 22, color: 'var(--primary)' }}></i>
-        <span className="hdr-title">Pannello Host</span>
+        <span className="hdr-title">Pannello Banca</span>
         <a href="setup/" className="new-btn"><i className="ti ti-user-plus"></i> Nuovo giocatore</a>
         <div className="menu-wrap">
           <button className="menu-btn" onClick={e => { e.stopPropagation(); setMenuOpen(o => !o); }}><i className="ti ti-dots-vertical"></i></button>

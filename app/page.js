@@ -147,7 +147,7 @@ export default function Wallet() {
                 </div>
                 <div className="ob-rule">
                   <div className="ob-rule-ic c">🏆</div>
-                  <div className="ob-rule-tx">Accumula più YousCoin per <b>salire in classifica</b>.</div>
+                  <div className="ob-rule-tx">Più partecipi, più <b>YousCoin accumuli</b> nel tuo portafoglio.</div>
                 </div>
               </div>
             </div>
