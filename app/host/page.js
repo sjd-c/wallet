@@ -28,7 +28,7 @@ export default function Host() {
   useEffect(() => onValue(ref(db, 'joinRequests'), snap => setRequests(snap.val() || {})), []);
 
   useEffect(() => {
-    const close = () => setMenuOpen(false);
+    const close = e => { if (!e.target.closest('.menu-wrap')) setMenuOpen(false); };
     document.addEventListener('click', close);
     return () => document.removeEventListener('click', close);
   }, []);
@@ -168,7 +168,7 @@ export default function Host() {
         <span className="hdr-title">Pannello Banca</span>
         <a href="setup/" className="new-btn"><i className="ti ti-user-plus"></i> Nuovo giocatore</a>
         <div className="menu-wrap">
-          <button className="menu-btn" onClick={e => { e.stopPropagation(); setMenuOpen(o => !o); }}><i className="ti ti-dots-vertical"></i></button>
+          <button className="menu-btn" onClick={() => setMenuOpen(o => !o)}><i className="ti ti-dots-vertical"></i></button>
           <div className={'menu-dd' + (menuOpen ? ' open' : '')}>
             <button className="neutral" onClick={() => { setMenuOpen(false); copyJoinLink(); }}><i className="ti ti-link"></i> Copia link iscrizione</button>
             <button onClick={() => { setMenuOpen(false); setResetOpen(true); }}><i className="ti ti-refresh"></i> Reset anno</button>
