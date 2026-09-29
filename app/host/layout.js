@@ -1,5 +1,4 @@
 import { BASE } from '@/lib/utils';
-import BankGate from '@/components/BankGate';
 
 export const metadata = {
   title: 'Banca — YousCoin',
@@ -8,5 +7,5 @@ export const metadata = {
 };
 
 export default function HostLayout({ children }) {
-  return <BankGate>{children}</BankGate>;
+  return children;
 }
