@@ -1,0 +1,16 @@
+{
+  "name": "youscoin-wallet",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3100",
+    "build": "next build && node scripts/stamp-sw.mjs",
+    "start": "npx serve out"
+  },
+  "dependencies": {
+    "@tabler/icons-webfont": "3.2.0",
+    "firebase": "^10.12.2",
+    "next": "^15",
+    "react": "^19",
+    "react-dom": "^19"
+  }
+}
