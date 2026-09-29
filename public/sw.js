@@ -22,6 +22,19 @@ self.addEventListener('fetch', e => {
   const url = e.request.url;
   if (e.request.method !== 'GET' || url.includes('firebasedatabase') || url.includes('googleapis.com') ||
       url.includes('gstatic.com') || url.includes('jsdelivr.net')) return;
+  // Pages: network first so a new deploy is picked up right away; cache only when offline.
+  if (e.request.mode === 'navigate') {
+    e.respondWith(
+      fetch(e.request).then(res => {
+        if (res.ok) {
+          const clone = res.clone();
+          caches.open(CACHE).then(c => c.put(e.request, clone));
+        }
+        return res;
+      }).catch(() => caches.match(e.request, { ignoreSearch: true }))
+    );
+    return;
+  }
   e.respondWith(
     caches.match(e.request, { ignoreSearch: e.request.mode === 'navigate' }).then(cached => {
       if (cached) return cached;
