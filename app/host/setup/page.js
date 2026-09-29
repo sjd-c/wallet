@@ -2,22 +2,20 @@
 import { useState } from 'react';
 import { ref, get, set, push, serverTimestamp } from 'firebase/database';
 import { db } from '@/lib/firebase';
+import { slugify } from '@/lib/utils';
 import { useToast } from '@/lib/useToast';
 import UpdateBanner from '@/components/UpdateBanner';
+import AvatarPicker from '@/components/AvatarPicker';
 import './setup.css';
 
 const BASE_URL = 'sjd-c.github.io/wallet/?id=';
-
-function slugify(s) {
-  return s.toLowerCase()
-    .normalize('NFD').replace(/[̀-ͯ]/g, '')
-    .replace(/[^a-z0-9]/g, '');
-}
 
 export default function Setup() {
   const [name, setName] = useState('');
   const [id, setId] = useState('');
   const [balance, setBalance] = useState('0');
+  const [avatar, setAvatar] = useState(null);
+  const [pickerKey, setPickerKey] = useState(0);
   const [idError, setIdError] = useState(false);
   const [creating, setCreating] = useState(false);
   const [created, setCreated] = useState(null);   // { name, link }
@@ -51,7 +49,7 @@ export default function Setup() {
         return;
       }
 
-      await set(ref(db, 'players/' + pid), { name: n, balance: bal });
+      await set(ref(db, 'players/' + pid), { name: n, balance: bal, avatar: avatar || null });
 
       if (bal > 0) {
         await push(ref(db, 'players/' + pid + '/history'), {
@@ -76,7 +74,7 @@ export default function Setup() {
   }
 
   function resetForm() {
-    setName(''); setId(''); setBalance('0');
+    setName(''); setId(''); setBalance('0'); setAvatar(null); setPickerKey(k => k + 1);
     setIdError(false); setCreating(false); setCreated(null);
   }
 
@@ -115,6 +113,11 @@ export default function Setup() {
             <div className="form-group">
               <div className="form-lbl">saldo iniziale (YousCoin)</div>
               <input className="form-inp" type="number" placeholder="0" min="0" value={balance} onChange={e => setBalance(e.target.value)} />
+            </div>
+
+            <div className="form-group">
+              <div className="form-lbl">avatar (facoltativo)</div>
+              <AvatarPicker key={pickerKey} value={avatar} onChange={setAvatar} />
             </div>
 
             <div className="link-box">

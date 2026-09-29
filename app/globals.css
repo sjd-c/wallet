@@ -6,3 +6,13 @@ body{font-family:var(--font-nunito),sans-serif;background:#f7fffe;min-height:100
 #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a1a1a;color:#fff;padding:10px 20px;border-radius:30px;font-size:13px;font-weight:700;opacity:0;transition:all .3s;z-index:999;white-space:nowrap}
 #toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 @keyframes spin{to{transform:rotate(360deg)}}
+
+/* Avatar picker (join + setup) */
+.av-gender{display:flex;gap:8px}
+.av-gender button{flex:1;padding:10px;font-size:13px;font-weight:800;border-radius:12px;border:2px solid #ddd;background:#fff;color:#666;cursor:pointer;font-family:var(--font-nunito),sans-serif;display:flex;align-items:center;justify-content:center;gap:6px}
+.av-gender button.sel{border-color:#1D9E75;background:#e6f9f2;color:#1D9E75}
+.av-options{display:flex;gap:10px;justify-content:center;margin-top:12px}
+.av-opt{width:84px;height:84px;padding:4px;border-radius:50%;border:3px solid transparent;background:none;cursor:pointer;transition:transform .15s}
+.av-opt img{width:100%;height:100%;border-radius:50%;display:block}
+.av-opt.sel{border-color:#1D9E75;transform:scale(1.06)}
+.av-more{margin:10px auto 0;padding:7px 14px;font-size:12px;font-weight:800;border-radius:10px;border:2px solid #ddd;background:#fafafa;color:#666;cursor:pointer;font-family:var(--font-nunito),sans-serif;display:flex;align-items:center;gap:5px}

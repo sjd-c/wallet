@@ -2,8 +2,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { ref, onValue } from 'firebase/database';
 import { db } from '@/lib/firebase';
-import { BASE, palette, initials, fmtDate, doConfetti } from '@/lib/utils';
+import { BASE, fmtDate, doConfetti } from '@/lib/utils';
 import UpdateBanner from '@/components/UpdateBanner';
+import Avatar from '@/components/Avatar';
 import './wallet.css';
 
 const OB_LAST = 2;
@@ -86,7 +87,6 @@ export default function Wallet() {
   const obNext = () => (obStep < OB_LAST ? obGoto(obStep + 1) : finishOnboarding());
 
   const balance = player ? player.balance || 0 : 0;
-  const [avBg, avCol] = pid ? palette(pid) : ['', ''];
 
   return (
     <>
@@ -160,7 +160,7 @@ export default function Wallet() {
       {view === 'main' && (
         <div id="main">
           <div className="hdr">
-            <div className="hdr-av" style={{ background: avBg, color: avCol }}>{initials(player.name)}</div>
+            <Avatar id={pid} name={player.name} avatar={player.avatar} size={36} />
             <span className="hdr-name">{player.name}</span>
             <span className="hdr-tag">portafoglio</span>
           </div>

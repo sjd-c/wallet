@@ -2,15 +2,17 @@
 import { useEffect, useRef, useState } from 'react';
 import { ref, onValue, push, update, set, remove, increment, serverTimestamp } from 'firebase/database';
 import { db } from '@/lib/firebase';
-import { palette, initials } from '@/lib/utils';
+import { BASE, slugify } from '@/lib/utils';
 import { useToast } from '@/lib/useToast';
 import UpdateBanner from '@/components/UpdateBanner';
+import Avatar from '@/components/Avatar';
 import './host.css';
 
 const byName = players => (a, b) => players[a].name.localeCompare(players[b].name);
 
 export default function Host() {
   const [players, setPlayers] = useState(null);
+  const [requests, setRequests] = useState({});
   const [menuOpen, setMenuOpen] = useState(false);
   const [send, setSend] = useState(null);       // { tutti, ids: [] } while the send modal is open
   const [stepInput, setStepInput] = useState('10');
@@ -23,6 +25,7 @@ export default function Host() {
   const editInp = useRef();
 
   useEffect(() => onValue(ref(db, 'players'), snap => setPlayers(snap.val() || {})), []);
+  useEffect(() => onValue(ref(db, 'joinRequests'), snap => setRequests(snap.val() || {})), []);
 
   useEffect(() => {
     const close = () => setMenuOpen(false);
@@ -81,6 +84,44 @@ export default function Host() {
     }
   }
 
+  // ── Join requests ──
+  const pending = Object.keys(requests).filter(k => requests[k].status === 'pending')
+    .sort((a, b) => (requests[a].createdAt || 0) - (requests[b].createdAt || 0));
+
+  function freeId(name) {
+    const base = slugify(name.split(' ')[0] || '') || 'giocatore';
+    let id = base, i = 2;
+    while (players[id]) id = base + i++;
+    return id;
+  }
+
+  async function approveRequest(key) {
+    const r = requests[key];
+    const id = freeId(r.name);
+    try {
+      await update(ref(db), {
+        ['players/' + id]: { name: r.name, balance: 0, avatar: r.avatar || null },
+        ['joinRequests/' + key + '/status']: 'approved',
+        ['joinRequests/' + key + '/playerId']: id,
+      });
+      showToast(r.name.split(' ')[0] + ' approvato ✅');
+    } catch (e) { showToast('Errore: ' + e.message); }
+  }
+
+  async function rejectRequest(key) {
+    try {
+      await set(ref(db, 'joinRequests/' + key + '/status'), 'rejected');
+      showToast('Richiesta rifiutata');
+    } catch (e) { showToast('Errore: ' + e.message); }
+  }
+
+  function copyJoinLink() {
+    const link = location.origin + BASE + '/join/';
+    navigator.clipboard.writeText(link)
+      .then(() => showToast('Link iscrizione copiato ✅'))
+      .catch(() => showToast(link));
+  }
+
   // ── Edit ──
   async function confirmEdit() {
     const newName = edit.name.trim();
@@ -130,6 +171,7 @@ export default function Host() {
         <div className="menu-wrap">
           <button className="menu-btn" onClick={e => { e.stopPropagation(); setMenuOpen(o => !o); }}><i className="ti ti-dots-vertical"></i></button>
           <div className={'menu-dd' + (menuOpen ? ' open' : '')}>
+            <button className="neutral" onClick={() => { setMenuOpen(false); copyJoinLink(); }}><i className="ti ti-link"></i> Copia link iscrizione</button>
             <button onClick={() => { setMenuOpen(false); setResetOpen(true); }}><i className="ti ti-refresh"></i> Reset anno</button>
           </div>
         </div>
@@ -155,16 +197,34 @@ export default function Host() {
         <button className="send-all-btn">Invia ↗</button>
       </div>
 
+      {pending.length > 0 && (
+        <>
+          <div className="sec-lbl pending">richieste in attesa ({pending.length})</div>
+          <div className="req-list">
+            {pending.map(key => {
+              const r = requests[key];
+              return (
+                <div className="req-row" key={key}>
+                  <Avatar name={r.name} avatar={r.avatar} size={40} />
+                  <span className="req-name">{r.name}</span>
+                  <button className="req-no" onClick={() => rejectRequest(key)} aria-label="Rifiuta"><i className="ti ti-x"></i></button>
+                  <button className="req-ok" onClick={() => approveRequest(key)}><i className="ti ti-check"></i> Approva</button>
+                </div>
+              );
+            })}
+          </div>
+        </>
+      )}
+
       <div className="sec-lbl">tutti i saldi</div>
       <div id="plist">
         {!players ? <div className="loading-row">Caricamento...</div>
           : !ids.length ? <div className="empty-state"><i className="ti ti-plant-2" style={{ display: 'block', fontSize: 40, color: '#bfe8da', marginBottom: 6 }}></i>Nessun giocatore ancora<br />Tocca <strong>Nuovo</strong> per crearne uno.</div>
           : ids.map(id => {
             const p = players[id];
-            const [bg, col] = palette(id);
             return (
               <div className="p-row" key={id}>
-                <div className="p-av" style={{ background: bg, color: col }}>{initials(p.name)}</div>
+                <Avatar id={id} name={p.name} avatar={p.avatar} size={34} />
                 <span className="p-name"><span>{p.name}</span><button className="edit-btn" onClick={() => setEdit({ id, name: p.name })}><i className="ti ti-pencil"></i></button></span>
                 <div style={{ textAlign: 'right', marginRight: 2 }}><div className="p-bal">{p.balance || 0}</div><div className="p-bal-lbl">YC</div></div>
                 <button className="send-btn" onClick={() => openSend(false, [id])}>+ invia</button>
@@ -192,11 +252,10 @@ export default function Host() {
                   </div>
                   {ids.map(id => {
                     const p = players[id];
-                    const [bg, col] = palette(id);
                     const isSel = send.ids.includes(id);
                     return (
                       <div key={id} className={'chip' + (isSel ? ' sel' : '')} onClick={() => toggleChip(id)}>
-                        <div className="chip-av" style={isSel ? undefined : { background: bg, color: col }}>{initials(p.name)}</div>
+                        <Avatar id={id} name={p.name} avatar={p.avatar} size={22} />
                         {p.name.split(' ')[0]}
                       </div>
                     );

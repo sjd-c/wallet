@@ -95,3 +95,16 @@
 .del-confirm{flex:1;padding:12px;border-radius:12px;border:none;background:#e05555;color:#fff;cursor:pointer;font-family:var(--font-nunito),sans-serif;font-size:13px;font-weight:900}
 
 
+
+.menu-dd button.neutral{color:#444}
+.menu-dd button.neutral:active{background:#f5f5f5}
+
+/* Join requests */
+.sec-lbl.pending{color:#9a6200}
+.sec-lbl.pending::before{background:#EF9F27}
+.req-list{margin:0 14px 12px;background:#FDF3DC;border:2px solid #f5d87a;border-radius:14px;overflow:hidden}
+.req-row{display:flex;align-items:center;gap:8px;padding:10px 12px}
+.req-row + .req-row{border-top:1.5px dashed #f5d87a}
+.req-name{flex:1;font-size:13px;font-weight:800;color:#333;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.req-ok{min-height:40px;padding:0 14px;font-size:12px;font-weight:900;background:#1D9E75;color:#fff;border:none;border-radius:10px;cursor:pointer;font-family:var(--font-nunito),sans-serif;display:flex;align-items:center;gap:4px}
+.req-no{width:40px;height:40px;font-size:18px;background:#fff;color:#b81a1a;border:2px solid #ffd0d0;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center}
