@@ -2,10 +2,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { ref, onValue, push, update, set, remove, increment, serverTimestamp } from 'firebase/database';
 import { db } from '@/lib/firebase';
-import { BASE, slugify } from '@/lib/utils';
+import { BASE, privateId } from '@/lib/utils';
 import { useToast } from '@/lib/useToast';
 import UpdateBanner from '@/components/UpdateBanner';
 import Avatar from '@/components/Avatar';
+import { bankSignOut } from '@/components/BankGate';
 import './host.css';
 
 const byName = players => (a, b) => players[a].name.localeCompare(players[b].name);
@@ -89,9 +90,8 @@ export default function Host() {
     .sort((a, b) => (requests[a].createdAt || 0) - (requests[b].createdAt || 0));
 
   function freeId(name) {
-    const base = slugify(name.split(' ')[0] || '') || 'giocatore';
-    let id = base, i = 2;
-    while (players[id]) id = base + i++;
+    let id;
+    do id = privateId(name); while (players[id]);
     return id;
   }
 
@@ -173,6 +173,7 @@ export default function Host() {
           <div className={'menu-dd' + (menuOpen ? ' open' : '')}>
             <button className="neutral" onClick={() => { setMenuOpen(false); copyJoinLink(); }}><i className="ti ti-link"></i> Copia link iscrizione</button>
             <button onClick={() => { setMenuOpen(false); setResetOpen(true); }}><i className="ti ti-refresh"></i> Reset anno</button>
+            <button className="neutral" onClick={() => { setMenuOpen(false); bankSignOut(); }}><i className="ti ti-logout"></i> Esci</button>
           </div>
         </div>
       </div>

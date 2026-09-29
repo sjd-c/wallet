@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { ref, get, set, push, serverTimestamp } from 'firebase/database';
 import { db } from '@/lib/firebase';
-import { slugify } from '@/lib/utils';
+import { privateId, randomTail } from '@/lib/utils';
 import { useToast } from '@/lib/useToast';
 import UpdateBanner from '@/components/UpdateBanner';
 import AvatarPicker from '@/components/AvatarPicker';
@@ -15,6 +15,7 @@ export default function Setup() {
   const [id, setId] = useState('');
   const [balance, setBalance] = useState('0');
   const [avatar, setAvatar] = useState(null);
+  const [tail, setTail] = useState(randomTail);
   const [pickerKey, setPickerKey] = useState(0);
   const [idError, setIdError] = useState(false);
   const [creating, setCreating] = useState(false);
@@ -24,11 +25,11 @@ export default function Setup() {
 
   function onNameInput(v) {
     setName(v);
-    setId(slugify(v.split(' ')[0] || ''));
+    setId(v.trim() ? privateId(v, tail) : '');
     setIdError(false);
   }
   function onIdInput(v) {
-    setId(slugify(v));
+    setId(v.toLowerCase().replace(/[^a-z0-9-]/g, ''));
     setIdError(false);
   }
 
@@ -74,7 +75,7 @@ export default function Setup() {
   }
 
   function resetForm() {
-    setName(''); setId(''); setBalance('0'); setAvatar(null); setPickerKey(k => k + 1);
+    setName(''); setId(''); setBalance('0'); setAvatar(null); setPickerKey(k => k + 1); setTail(randomTail());
     setIdError(false); setCreating(false); setCreated(null);
   }
 
@@ -106,7 +107,7 @@ export default function Setup() {
             <div className="form-group">
               <div className="form-lbl">ID univoco (per il link)</div>
               <input className="form-inp" type="text" placeholder="es. marco" value={id} onChange={e => onIdInput(e.target.value)} />
-              <div className="form-hint">solo lettere minuscole e numeri, senza spazi</div>
+              <div className="form-hint">generato con un codice casuale, così nessuno può indovinare il link</div>
               {idError && <div className="form-error">ID già in uso, scegliene un altro</div>}
             </div>
 

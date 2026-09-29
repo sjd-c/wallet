@@ -1,0 +1,33 @@
+{
+  "rules": {
+    "hosts": {
+      ".read": "auth != null",
+      "$uid": {
+        ".write": "auth != null && auth.uid === $uid && !root.child('hosts').exists()"
+      }
+    },
+
+    "players": {
+      ".read": "auth != null && root.child('hosts').child(auth.uid).exists()",
+      ".write": "auth != null && root.child('hosts').child(auth.uid).exists()",
+      "$pid": {
+        ".read": true,
+        "avatar": {
+          ".write": "data.parent().exists()",
+          ".validate": "newData.hasChildren(['seed', 'gender']) && newData.child('seed').isString() && newData.child('seed').val().length <= 40 && (newData.child('gender').val() === 'm' || newData.child('gender').val() === 'f')"
+        }
+      }
+    },
+
+    "joinRequests": {
+      ".read": "auth != null && root.child('hosts').child(auth.uid).exists()",
+      ".write": "auth != null && root.child('hosts').child(auth.uid).exists()",
+      "$rid": {
+        ".read": true,
+        ".write": "!data.exists()",
+        ".validate": "newData.child('status').val() === 'pending' || (auth != null && root.child('hosts').child(auth.uid).exists())",
+        "name": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 60" }
+      }
+    }
+  }
+}
