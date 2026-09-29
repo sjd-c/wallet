@@ -1,7 +1,7 @@
 import { BASE } from '@/lib/utils';
 
 export const metadata = {
-  title: 'Unisciti — YousCoin',
+  title: 'Unisciti alla Banca — YousCoin',
   manifest: BASE + '/manifest.json',
 };
 

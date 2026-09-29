@@ -23,11 +23,11 @@
 
 /* Notification */
 #notif{display:flex;margin:12px 14px 0;padding:11px 14px;background:linear-gradient(90deg,#d0f2e7,#e8f8f3);border-radius:14px;align-items:center;gap:10px;border:1.5px solid #9ee8cc}
-#notif i{color:#1D9E75;font-size:22px;flex-shrink:0}
-#notif-text{font-size:12px;color:#0F6E56;font-weight:700;flex:1}
+#notif i{color:var(--primary);font-size:22px;flex-shrink:0}
+#notif-text{font-size:12px;color:var(--primary-dark);font-weight:700;flex:1}
 
 /* Balance card */
-.bal-card{margin:12px 14px;padding:24px 18px 20px;background:#1D9E75;border-radius:22px;color:#fff;text-align:center;position:relative;overflow:hidden}
+.bal-card{margin:12px 14px;padding:24px 18px 20px;background:var(--primary);border-radius:22px;color:#fff;text-align:center;position:relative;overflow:hidden}
 .bal-card::before{content:'';position:absolute;top:-30px;right:-30px;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.08)}
 .bal-card::after{content:'';position:absolute;bottom:-20px;left:-20px;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.06)}
 .bal-lbl{font-size:12px;opacity:.85;margin-bottom:4px;font-weight:700;letter-spacing:.5px}
@@ -37,21 +37,21 @@
 .bal-coin{display:inline-block;margin-top:8px;background:rgba(255,255,255,.22);border-radius:20px;padding:3px 14px;font-size:12px;font-weight:800;letter-spacing:.5px}
 
 /* Section label */
-.sec-lbl{font-size:11px;color:#1D9E75;font-weight:900;padding:14px 14px 6px;text-transform:uppercase;letter-spacing:.8px;display:flex;align-items:center;gap:6px}
-.sec-lbl::before{content:'';width:8px;height:8px;border-radius:50%;background:#1D9E75;display:inline-block;flex-shrink:0}
+.sec-lbl{font-size:11px;color:var(--primary);font-weight:900;padding:14px 14px 6px;text-transform:uppercase;letter-spacing:.8px;display:flex;align-items:center;gap:6px}
+.sec-lbl::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--primary);display:inline-block;flex-shrink:0}
 
 /* Transactions */
 .tx-list{padding:0 14px 100px;overflow-y:auto;flex:1}
 .tx-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1.5px dashed #e0f5ef}
 .tx-ic{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
-.tx-ic.in{background:#d0f2e7;color:#1D9E75}
-.tx-ic.out{background:#ffe8e8;color:#e05555}
+.tx-ic.in{background:#d0f2e7;color:var(--primary)}
+.tx-ic.out{background:#ffe8e8;color:var(--danger)}
 .tx-inf{flex:1;min-width:0}
 .tx-title{font-size:13px;color:#222;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tx-date{font-size:11px;color:#bbb;font-weight:600}
 .tx-val{font-size:14px;font-weight:900;white-space:nowrap}
-.tx-val.pos{color:#1D9E75}
-.tx-val.neg{color:#e05555}
+.tx-val.pos{color:var(--primary)}
+.tx-val.neg{color:var(--danger)}
 .empty{text-align:center;padding:40px 20px;color:#ccc;font-size:13px;font-weight:700}
 
 /* iOS install hint */
@@ -79,22 +79,21 @@
 .ob-rule-list{display:flex;flex-direction:column;gap:14px;width:100%;max-width:300px;text-align:left}
 .ob-rule{display:flex;align-items:flex-start;gap:12px;background:#fff;border:2px solid #e8f4f0;border-radius:16px;padding:14px 16px}
 .ob-rule-ic{flex-shrink:0;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px}
-.ob-rule-ic.a{background:#e6f9f2;color:#1D9E75}
-.ob-rule-ic.b{background:#fdf3dc;color:#EF9F27}
-.ob-rule-ic.c{background:#fdecec;color:#e05555}
+.ob-rule-ic.a{background:#e6f9f2;color:var(--primary)}
+.ob-rule-ic.b{background:var(--primary-soft);color:var(--primary)}
+.ob-rule-ic.c{background:#fdf3dc;color:var(--coin)}
 .ob-rule-tx{font-size:13px;font-weight:700;color:#556}
 .ob-rule-tx b{color:#1a1a1a;font-weight:900}
-.ob-bal-card{width:100%;max-width:280px;background:linear-gradient(160deg,#1D9E75,#157a5b);border-radius:26px;padding:30px 24px;color:#fff;box-shadow:0 18px 40px rgba(29,158,117,.32)}
+.ob-bal-card{width:100%;max-width:280px;background:linear-gradient(160deg,var(--primary),#157a5b);border-radius:26px;padding:30px 24px;color:#fff;box-shadow:0 18px 40px rgba(29,158,117,.32)}
 .ob-bal-lbl{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;opacity:.75}
 .ob-bal-num{font-size:52px;font-weight:900;letter-spacing:-1.5px;margin:6px 0 2px;font-variant-numeric:tabular-nums}
 .ob-bal-sub{font-size:12.5px;font-weight:700;opacity:.85}
 .ob-dots{display:flex;gap:7px;justify-content:center;padding:4px 0 6px}
 .ob-dot{width:7px;height:7px;border-radius:50%;background:#d7ece5;transition:all .3s}
-.ob-dot.on{width:20px;background:#1D9E75}
+.ob-dot.on{width:20px;background:var(--primary)}
 .ob-foot{padding:6px 24px calc(26px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:10px}
-.ob-cta{border:none;border-radius:16px;padding:16px;background:#1D9E75;color:#fff;font-family:var(--font-nunito),sans-serif;font-size:15px;font-weight:900;cursor:pointer;transition:transform .12s,background .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.ob-cta{border:none;border-radius:16px;padding:16px;background:var(--primary);color:#fff;font-family:var(--font-nunito),sans-serif;font-size:15px;font-weight:900;cursor:pointer;transition:transform .12s,background .2s;display:flex;align-items:center;justify-content:center;gap:8px}
 .ob-cta:active{transform:scale(.97)}
-.ob-cta.gold{background:#EF9F27}
 .ob-back{border:none;background:none;color:#8a9b96;font-family:var(--font-nunito),sans-serif;font-size:12.5px;font-weight:800;padding:4px;cursor:pointer;visibility:hidden}
 .ob-back.show{visibility:visible}
 @media (prefers-reduced-motion: reduce){.ob-coin{animation:none}.ob-track{transition:none}}

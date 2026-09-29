@@ -165,7 +165,7 @@ export default function Host() {
       <UpdateBanner />
 
       <div className="hdr">
-        <i className="ti ti-layout-dashboard" style={{ fontSize: 22, color: '#1D9E75' }}></i>
+        <i className="ti ti-layout-dashboard" style={{ fontSize: 22, color: 'var(--primary)' }}></i>
         <span className="hdr-title">Pannello Host</span>
         <a href="setup/" className="new-btn"><i className="ti ti-user-plus"></i> Nuovo giocatore</a>
         <div className="menu-wrap">
@@ -183,7 +183,7 @@ export default function Host() {
           <div className="sum-lbl">giocatori</div>
         </div>
         <div className="sum-card">
-          <div className="sum-num" style={{ color: '#EF9F27' }}>{players ? total.toLocaleString('it-IT') : '—'}</div>
+          <div className="sum-num" style={{ color: 'var(--coin)' }}>{players ? total.toLocaleString('it-IT') : '—'}</div>
           <div className="sum-lbl">YousCoin totali</div>
         </div>
       </div>
@@ -199,7 +199,7 @@ export default function Host() {
 
       {pending.length > 0 && (
         <>
-          <div className="sec-lbl pending">richieste in attesa ({pending.length})</div>
+          <div className="sec-lbl">richieste in attesa ({pending.length})</div>
           <div className="req-list">
             {pending.map(key => {
               const r = requests[key];
@@ -238,7 +238,7 @@ export default function Host() {
       <div className={'overlay' + (send ? ' open' : '')} onClick={overlayClick(() => setSend(null))}>
         <div className="modal">
           <div className="modal-hdr">
-            <i className="ti ti-coin" style={{ fontSize: 22, color: '#1D9E75' }}></i>
+            <i className="ti ti-coin" style={{ fontSize: 22, color: 'var(--primary)' }}></i>
             <span className="modal-title">Invia YousCoin</span>
             <button className="modal-close" onClick={() => setSend(null)}>✕</button>
           </div>

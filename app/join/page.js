@@ -60,7 +60,7 @@ export default function Join() {
       <div className="join-center">
         <Avatar name={req.name} avatar={req.avatar} size={96} />
         <div className="join-title">Ciao, {req.name.split(' ')[0]}!</div>
-        <div className="join-sub">Richiesta inviata.<br />Aspetta che l'host ti approvi: questa pagina si aggiornerà da sola.</div>
+        <div className="join-sub">Richiesta inviata.<br />Aspetta che la Banca ti approvi: questa pagina si aggiornerà da sola.</div>
         <div className="join-wait"><i className="ti ti-hourglass"></i> in attesa di approvazione</div>
       </div>
     );
@@ -72,7 +72,7 @@ export default function Join() {
       <div className="join-center">
         <Avatar name={req.name} avatar={req.avatar} size={96} />
         <div className="join-title">Sei dentro, {req.name.split(' ')[0]}!</div>
-        <div className="join-sub">L'host ti ha approvato. Questo è il tuo portafoglio privato: salvalo e non condividerlo.</div>
+        <div className="join-sub">La Banca ti ha approvato. Questo è il tuo portafoglio YousCoin: salva il link e non condividerlo.</div>
         <div className="success-link" style={{ width: '100%' }}>
           <div className="success-link-lbl"><i className="ti ti-link"></i> il tuo link privato</div>
           <div className="success-link-url">{link}</div>
@@ -89,7 +89,7 @@ export default function Join() {
       <div className="join-center">
         <i className="ti ti-user-x" style={{ fontSize: 52, color: '#ccc' }}></i>
         <div className="join-title">Richiesta non approvata</div>
-        <div className="join-sub">Parla con l'host e riprova.</div>
+        <div className="join-sub">Parla con la Banca e riprova.</div>
         <button className="new-player-btn" onClick={forget}>Invia una nuova richiesta</button>
       </div>
     );
@@ -99,7 +99,7 @@ export default function Join() {
     <>
       <div className="hdr">
         <img src={BASE + '/icons/youscoin-coin.png'} alt="" style={{ width: 28, height: 28 }} />
-        <span className="hdr-title">Unisciti a YousCoin</span>
+        <span className="hdr-title">Unisciti alla nostra Banca</span>
       </div>
 
       <div className="form-area">
@@ -118,7 +118,7 @@ export default function Join() {
             ? <><i className="ti ti-loader-2" style={{ animation: 'spin .8s linear infinite' }}></i> Invio...</>
             : <><i className="ti ti-send"></i> Chiedi di entrare</>}
         </button>
-        <p className="join-note">L'host riceverà la tua richiesta e, una volta approvata, avrai il tuo portafoglio privato.</p>
+        <p className="join-note">La Banca riceverà la tua richiesta. Appena approvata, avrai il tuo portafoglio YousCoin personale.</p>
       </div>
 
       {toastEl}

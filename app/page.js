@@ -104,7 +104,7 @@ export default function Wallet() {
         <div id="error">
           <div className="err-icon"><i className="ti ti-link-off"></i></div>
           <h2>Link non valido</h2>
-          <p>Controlla il link che ti è stato condiviso<br />o contatta il tuo host.</p>
+          <p>Controlla il link che ti è stato condiviso<br />o contatta la Banca.</p>
         </div>
       )}
 
@@ -115,7 +115,7 @@ export default function Wallet() {
             <div className="ob-slide">
               <div className="ob-coin"><img src={BASE + '/icons/youscoin-coin.png'} alt="YousCoin" /></div>
               <h1>Benvenuto in YousCoin!</h1>
-              <p className="ob-lead">La moneta ufficiale del gruppo. La usiamo per premiare le sfide, i giochi, i piani biblici e tante altre cose.</p>
+              <p className="ob-lead">La moneta ufficiale del gruppo. La Banca la usa per premiare le sfide, i giochi, i piani biblici e tante altre cose.</p>
               <div className="ob-tag">Ciao, {player.name.split(' ')[0]}! 👋</div>
             </div>
             <div className="ob-slide">
@@ -127,7 +127,7 @@ export default function Wallet() {
                 </div>
                 <div className="ob-rule">
                   <div className="ob-rule-ic b">📊</div>
-                  <div className="ob-rule-tx">Il tuo saldo si aggiorna <b>in tempo reale</b> ogni volta che ricevi una moneta.</div>
+                  <div className="ob-rule-tx">Il tuo saldo si aggiorna <b>in tempo reale</b> ogni volta che la Banca ti invia YousCoin.</div>
                 </div>
                 <div className="ob-rule">
                   <div className="ob-rule-ic c">🏆</div>
@@ -142,7 +142,7 @@ export default function Wallet() {
                 <div className="ob-bal-num">{balance}</div>
                 <div className="ob-bal-sub">YousCoin</div>
               </div>
-              <p className="ob-lead">Da qui in poi, ogni moneta che ricevi apparirà qui — pronto per iniziare?</p>
+              <p className="ob-lead">Da qui in poi, ogni YousCoin che ricevi apparirà qui — pronto per iniziare?</p>
             </div>
           </div>
           <div className="ob-dots">
@@ -186,7 +186,7 @@ export default function Wallet() {
       {iosHint && (
         <div id="ios-hint">
           <div className="ios-row">
-            <i className="ti ti-device-mobile-down" style={{ fontSize: 22, color: '#1D9E75' }}></i>
+            <i className="ti ti-device-mobile-down" style={{ fontSize: 22, color: 'var(--primary)' }}></i>
             <span className="ios-text">Installa YousCoin sulla schermata Home!</span>
             <button className="ios-close" onClick={dismissHint} aria-label="Chiudi"><i className="ti ti-x"></i></button>
           </div>
