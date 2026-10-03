@@ -1,6 +1,11 @@
-.join-center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 20px;text-align:center;gap:12px;min-height:100vh}
+.join-center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 20px;text-align:center;gap:12px;min-height:100vh;max-width:420px;width:100%;margin:0 auto}
 .join-title{font-size:20px;font-weight:900;color:#1a1a1a}
 .join-sub{font-size:13px;color:#888;font-weight:600;line-height:1.6;max-width:320px}
 .join-wait{margin-top:6px;padding:8px 14px;border-radius:20px;background:#f2f2f2;color:#888;font-size:12px;font-weight:800;display:flex;align-items:center;gap:6px}
 .join-open{text-decoration:none}
 .join-note{text-align:center;font-size:11px;color:#bbb;font-weight:600;margin-top:10px;line-height:1.5}
+
+/* Centered form layout (initial state) */
+.join-shell{flex:1;display:flex;flex-direction:column;align-items:center;min-height:100vh;width:100%}
+.join-shell .hdr{width:100%;max-width:420px;background:transparent;border-bottom:none;justify-content:center;padding-top:24px}
+.join-shell .form-area{flex:1;display:flex;flex-direction:column;justify-content:center;width:100%;max-width:420px;padding:14px 20px}

@@ -96,7 +96,7 @@ export default function Join() {
   }
 
   return (
-    <>
+    <div className="join-shell">
       <div className="hdr">
         <img src={BASE + '/icons/youscoin-coin.png'} alt="" style={{ width: 28, height: 28 }} />
         <span className="hdr-title">Unisciti alla nostra Banca</span>
@@ -122,6 +122,6 @@ export default function Join() {
       </div>
 
       {toastEl}
-    </>
+    </div>
   );
 }
